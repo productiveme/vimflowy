@@ -1,19 +1,21 @@
-FROM node:12-alpine AS build
+FROM node:12-alpine AS base
 # Prevent npm from spamming
 ENV NPM_CONFIG_LOGLEVEL=warn
 RUN npm config set progress=false
 WORKDIR /app/
 RUN apk update && apk add --no-cache yarn python2 g++ make
 COPY package.json package-lock.json ./
+
+FROM base AS build
+WORKDIR /app/
 RUN yarn install --frozen-lockfile
 COPY . .
 ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
 RUN npm run build
 
-FROM node:12-alpine
-WORKDIR /app
-RUN apk update && apk add --no-cache yarn python2 g++ make
-COPY --from=build /app/package.json /app/package-lock.json /app/build ./
+FROM base
+WORKDIR /app/
+COPY --from=build /app/build ./
 RUN yarn install --production
 VOLUME /app/db
 EXPOSE 3000
