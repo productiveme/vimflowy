@@ -24,11 +24,9 @@ COPY ./tsconfig.json ./
 RUN yarn install --production
 VOLUME /app/db
 EXPOSE 3000
-ENV VIMFLOWY_PASSWORD=
 ENTRYPOINT npm run startprod -- \
     --host 0.0.0.0 \
     --port 3000 \
     --staticDir /app/build \
     --db sqlite \
-    --dbfolder /app/db \
-    --password $VIMFLOWY_PASSWORD
+    --dbfolder /app/db
