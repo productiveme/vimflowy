@@ -13,8 +13,8 @@ RUN npm run build
 FROM node:12-slim
 WORKDIR /app
 COPY --from=build /app/package.json /app/package-lock.json ./
-COPY --from=build /app/node_modules ./
-RUN npm prune --production && npm cache clean --force 
+# COPY --from=build /app/node_modules ./
+RUN npm install --production
 RUN mkdir -p /app/build
 COPY --from=build /app/build/ /app/build
 VOLUME /app/db
