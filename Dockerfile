@@ -18,6 +18,7 @@ WORKDIR /app/
 # COPY --from=build /app ./
 COPY --from=build /app/build ./build
 COPY --from=build /app/server ./server
+COPY ./src ./src
 COPY ./package-prod.json ./package.json
 COPY ./tsconfig.json ./
 RUN yarn install --production
