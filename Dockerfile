@@ -13,12 +13,12 @@ COPY . .
 ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
 RUN npm run build
 
-FROM base
+FROM node:12-slim
 WORKDIR /app/
-COPY --from=build /app ./
-# COPY --from=build /app/build ./build
-# COPY --from=build /app/server ./server
-# COPY ./package-prod.json ./package.json
+# COPY --from=build /app ./
+COPY --from=build /app/build ./build
+COPY --from=build /app/server ./server
+COPY ./package-prod.json ./package.json
 RUN yarn install --production
 VOLUME /app/db
 EXPOSE 3000
