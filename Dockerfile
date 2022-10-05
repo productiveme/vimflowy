@@ -18,6 +18,7 @@ WORKDIR /app/
 COPY --from=build /app/build /app/server ./
 COPY ./package-prod.json ./package.json
 RUN yarn install --production
+RUN ls
 VOLUME /app/db
 EXPOSE 3000
 ENV VIMFLOWY_PASSWORD=
