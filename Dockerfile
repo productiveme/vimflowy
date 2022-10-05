@@ -12,8 +12,8 @@ RUN npm run build
 
 FROM node:12-alpine
 WORKDIR /app
-COPY --from=build /app/package.json /app/package-lock.json /app/build /app/node_modules ./
 RUN apk update && apk add --no-cache yarn python2 g++ make
+COPY --from=build /app/package.json /app/package-lock.json /app/build ./
 RUN yarn install --production
 VOLUME /app/db
 EXPOSE 3000
