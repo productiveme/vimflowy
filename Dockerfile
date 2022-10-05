@@ -14,7 +14,7 @@ FROM node:12-slim
 WORKDIR /app
 COPY --from=build /app/package.json /app/package-lock.json ./
 WORKDIR /app/node_modules
-COPY --from=build /app/node_modules/sqlite3 ./
+COPY --from=build /app/node_modules/sqlite3 /app/node_modules/node-sass ./
 WORKDIR /app
 RUN npm install --production
 RUN mkdir -p /app/build
