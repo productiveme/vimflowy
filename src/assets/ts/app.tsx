@@ -209,7 +209,7 @@ $(document).ready(async () => {
   } else if (backend_type === 'socketserver') {
     try {
       docStore = await getSocketServerStore();
-    } catch (e) {
+    } catch (e: any) {
       alert(`
         Error loading socket server datastore:
 
