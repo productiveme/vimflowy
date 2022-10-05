@@ -15,7 +15,7 @@ RUN npm run build
 
 FROM base
 WORKDIR /app/
-COPY --from=build /app/build ./
+COPY --from=build /app/build /app/server ./
 RUN yarn install --production
 VOLUME /app/db
 EXPOSE 3000
