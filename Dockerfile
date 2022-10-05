@@ -11,15 +11,9 @@ ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}'
 RUN npm run build
 RUN npm prune --production
 
-FROM node:12-slim
+FROM node:12-alpine
 WORKDIR /app
-COPY ./package-prod.json ./package.json
-# WORKDIR /app/node_modules
-# COPY --from=build /app/node_modules/sqlite3 /app/node_modules/node-sass ./
-# WORKDIR /app
-RUN npm install --production
-RUN mkdir -p /app/build
-COPY --from=build /app/build/ /app/build
+COPY --from=build /app/* ./
 VOLUME /app/db
 EXPOSE 3000
 ENV VIMFLOWY_PASSWORD=
