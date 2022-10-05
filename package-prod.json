@@ -4,6 +4,7 @@
     "private": true,
     "homepage": "./",
     "dependencies": {
+        "typescript": "^4.1.3",
         "ts-node": "^3.3.0"
     },
     "scripts": {

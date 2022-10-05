@@ -9,6 +9,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
 RUN npm run build
+RUN npm prune --production
 
 FROM node:12-slim
 WORKDIR /app
