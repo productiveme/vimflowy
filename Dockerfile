@@ -1,19 +1,20 @@
-FROM node:10-stretch AS build
-LABEL maintainer="will.price94@gmail.com"
-LABEL version="0.0.1"
+FROM node:12-alpine AS build
 # Prevent npm from spamming
 ENV NPM_CONFIG_LOGLEVEL=warn
 RUN npm config set progress=false
 WORKDIR /app/
+RUN apk update && apk add --no-cache yarn python2 g++ make
 COPY package.json package-lock.json ./
-RUN npm install
+RUN yarn install --frozen-lockfile
 COPY . .
-RUN REACT_APP_SERVER_CONFIG='{"socketserver": true}' npm run build
+ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
+RUN npm run build
 
-FROM node:10-alpine
+FROM node:12-slim
 WORKDIR /app
 COPY --from=build /app/package.json /app/package-lock.json ./
-RUN npm install --production
+COPY --from=build /app/node_modules ./
+RUN npm prune --production && npm cache clean --force 
 RUN mkdir -p /app/build
 COPY --from=build /app/build/ /app/build
 VOLUME /app/db
