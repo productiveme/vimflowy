@@ -15,10 +15,10 @@ RUN npm run build
 
 FROM node:12-slim
 WORKDIR /app/
-COPY --from=build /app/build /app/server ./
+COPY --from=build /app/build ./build
+COPY --from=build /app/server ./server
 COPY ./package-prod.json ./package.json
 RUN yarn install --production
-RUN ls
 VOLUME /app/db
 EXPOSE 3000
 ENV VIMFLOWY_PASSWORD=
