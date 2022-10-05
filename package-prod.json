@@ -1,0 +1,19 @@
+{
+    "name": "vimflowy",
+    "version": "0.1.0",
+    "private": true,
+    "homepage": "./",
+    "dependencies": {
+        "ts-node": "^3.3.0"
+    },
+    "scripts": {
+        "startprod": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' server/prod.ts"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ]
+    }
+}
