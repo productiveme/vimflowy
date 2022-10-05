@@ -13,7 +13,7 @@ COPY . .
 ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
 RUN npm run build
 
-FROM node:12-slim
+FROM base
 WORKDIR /app/
 # COPY --from=build /app ./
 COPY --from=build /app/build ./build
