@@ -13,7 +13,9 @@ RUN npm run build
 FROM node:12-slim
 WORKDIR /app
 COPY --from=build /app/package.json /app/package-lock.json ./
-# COPY --from=build /app/node_modules ./
+WORKDIR /app/node_modules
+COPY --from=build /app/node_modules/sqlite3 ./
+WORKDIR /app
 RUN npm install --production
 RUN mkdir -p /app/build
 COPY --from=build /app/build/ /app/build
