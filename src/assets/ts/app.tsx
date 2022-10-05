@@ -190,7 +190,7 @@ $(document).ready(async () => {
   if (backend_type === 'firebase') {
     try {
       docStore = await getFirebaseStore();
-    } catch (e) {
+    } catch (e: any) {
       alert(`
         Error loading firebase datastore:
 
