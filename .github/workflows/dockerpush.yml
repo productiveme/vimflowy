@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Install npm dependencies
-        run: npm ci
+        run: npm i
 
       - name: Release
         run: npm run docker:push
