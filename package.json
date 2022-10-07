@@ -43,7 +43,8 @@
         "test-windows": "SET TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\"}&& mocha --opts test/mocha.opts",
         "watchtest": "npm test -- --reporter dot --watch",
         "profiletest": "npm test -- --prof",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "docker:push": "docker buildx build --platform linux/arm64/v8,linux/amd64 -t productiveme/vimflowy --push ."
     },
     "eslintConfig": {
         "extends": [
