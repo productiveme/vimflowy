@@ -57,6 +57,14 @@ You can deploy with docker, or build from source yourself.
 Contributions are very welcome!
 See [dev_setup.md](docs/dev_setup.md) to see how to get started with a development setup.
 
+### M1 Macbook
+
+```bash
+npm uninstall sqlite3
+npm install sqlite3 --build-from-source --target_arch=arm64 --fallback-to-build --force
+npm rebuild --force
+```
+
 #### LICENSE
 
 MIT: https://wuthefwasthat.mit-license.org/
