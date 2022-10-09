@@ -38,7 +38,7 @@
     "watchtest": "npm test -- --reporter dot --watch",
     "profiletest": "npm test -- --prof",
     "eject": "react-scripts eject",
-    "dev": "#concurrently --kill-others \"cross-env BROWSER=none npm run startprod\" \"wait-on tcp:3000 && npm run electron\"",
+    "dev": "concurrently --kill-others \"cross-env BROWSER=none npm run startprod\" \"wait-on tcp:3000 && npm run electron\"",
     "electron": "electron .",
     "package": "electron-forge package",
     "make": "electron-forge make"
