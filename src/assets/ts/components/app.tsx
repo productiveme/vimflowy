@@ -183,7 +183,7 @@ export default class AppComponent extends React.Component<Props, {}> {
               display: 'flex',
               ...getStyles(session.clientStore, ['theme-bg-primary', 'theme-trim'])
             }}>
-            <a className='center'
+            <span className='center'
               onClick={async () => {
                 await session.setMode(settingsMode ? 'NORMAL' : 'SETTINGS');
               }}
