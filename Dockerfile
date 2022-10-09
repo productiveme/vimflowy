@@ -4,11 +4,11 @@ ENV NPM_CONFIG_LOGLEVEL=warn
 WORKDIR /app/
 RUN apt-get install curl gnupg -yq \
     && curl -sL https://deb.nodesource.com/setup_14.x | bash \
-    && apt-get install nodejs yarn -yq
+    && apt-get install nodejs -yq
 RUN npm config set progress=false
 COPY package.json package-lock.json ./
 WORKDIR /app/
-RUN yarn install
+RUN npm install
 COPY . .
 ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
 RUN npm run build
