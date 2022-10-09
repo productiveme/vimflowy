@@ -1,4 +1,6 @@
-import * as sqlite from 'sqlite3';
+import { Client } from './../node_modules/@types/pg/index.d';
+import sqlite3, { Database, Statement } from 'better-sqlite3';
+import { Client as PGClient } from 'pg';
 
 import DataBackend from '../src/shared/data_backend';
 
@@ -59,5 +61,37 @@ export class SQLiteBackend extends DataBackend {
         resolve();
       });
     });
+  }
+}
+
+export class PostgresBackend extends DataBackend {
+  private db!: Client;
+  private setStatement!: string;
+  private getStatement!: string;
+
+  private tableName: string = 'vimflowy';
+
+  constructor() {
+    super();
+  }
+
+  public async init(connectionString): Promise<void> {
+    this.db = new PGClient({ connectionString });
+
+    await this.db.query(
+      `CREATE TABLE IF NOT EXISTS ${this.tableName} (id string PRIMARY KEY, value string)`
+    );
+
+    this.getStatement = `SELECT value FROM ${this.tableName} WHERE id = ($1::text)`;
+    this.setStatement = `INSERT OR REPLACE INTO ${this.tableName} ("id", "value") VALUES ($1::text, $2::text)`;
+  }
+
+  public async get(key: string): Promise<string | null> {
+    const { rows: [ { value } ] } = await this.db.query(this.getStatement, [key]);
+    return value;
+  }
+
+  public async set(key: string, value: string): Promise<void> {
+    await this.db.query(this.setStatement, [key, value]);
   }
 }
