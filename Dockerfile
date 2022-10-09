@@ -1,12 +1,12 @@
-FROM node:12-alpine AS base
+FROM python:2.7 AS build
 # Prevent npm from spamming
 ENV NPM_CONFIG_LOGLEVEL=warn
-RUN npm config set progress=false
 WORKDIR /app/
-RUN apk update && apk add --no-cache yarn python2 g++ make
+RUN apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash \
+    && apt-get install nodejs yarn -yq
+RUN npm config set progress=false
 COPY package.json package-lock.json ./
-
-FROM base AS build
 WORKDIR /app/
 RUN yarn install --frozen-lockfile
 COPY . .
