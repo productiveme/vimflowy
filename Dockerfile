@@ -8,7 +8,7 @@ RUN apt-get install curl gnupg -yq \
 RUN npm config set progress=false
 COPY package.json package-lock.json ./
 WORKDIR /app/
-RUN yarn install --frozen-lockfile
+RUN yarn install
 COPY . .
 ENV REACT_APP_SERVER_CONFIG='{"socketserver": true}' 
 RUN npm run build
