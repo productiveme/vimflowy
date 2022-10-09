@@ -6,7 +6,6 @@
   "dependencies": {
     "better-sqlite3": "^7.6.2",
     "cross-env": "^7.0.3",
-    "electron-rebuild": "^3.2.9",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.16.4",
     "file-saver": "^2.0.5",
@@ -85,6 +84,7 @@
     "concurrently": "^7.4.0",
     "electron-builder": "^23.6.0",
     "electron-is-dev": "^2.0.0",
+    "electron-rebuild": "^3.2.9",
     "electron": "^6.1.12",
     "ignore-styles": "^5.0.1",
     "minimist": "^1.2.2",
