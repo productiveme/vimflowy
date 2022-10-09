@@ -1,4 +1,4 @@
-FROM node:12-alpine AS base
+FROM node:14-alpine AS base
 # Prevent npm from spamming
 ENV NPM_CONFIG_LOGLEVEL=warn
 RUN npm config set progress=false
