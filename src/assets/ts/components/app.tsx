@@ -199,7 +199,7 @@ export default class AppComponent extends React.Component<Props, {}> {
                 </span>
                 <span>{settingsMode ? 'Back' : 'Settings'}</span>
               </div>
-            </a>
+            </span>
             <div style={{flexBasis: 0, flexGrow: 1, overflowX: 'hidden'}}
               className={userMessage.text_class}>
               {userMessage.message}
