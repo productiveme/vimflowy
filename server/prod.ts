@@ -23,11 +23,14 @@ async function main(args: any) {
           --db $dbtype: If a db is set, we will additionally run a socket server.
             Available options:
             - 'sqlite' to use sqlite backend
+            - 'postgres' to use postgres backend
             Any other value currently defaults to an in-memory backend.
           --password: password to protect database with (defaults to empty)
 
           --dbfolder: For sqlite backend only.  Folder for sqlite to store data
             (defaults to in-memory if unspecified)
+
+          --pgconn $connectionstring: postgres connection string (postgres://un:pw@host:port/db)
 
           --buildDir: Where build assets should be served from.  Defaults to the \`build\`
             folder at the repo root.
@@ -38,10 +41,10 @@ async function main(args: any) {
     return;
   }
 
-  const buildDir = path.resolve(args.buildDir || defaultBuildDir);
+  const buildDir = path.resolve(args.buildDir || process.env.VF_BUILD_DIR || defaultBuildDir);
 
-  let port: number = args.port || 3000;
-  let host: string = args.host || 'localhost';
+  let port: number = args.port || process.env.VF_PORT || 3000;
+  let host: string = args.host || process.env.VF_HOST || 'localhost';
 
   if (!fs.existsSync(buildDir)) {
     logger.info(`
@@ -55,11 +58,12 @@ async function main(args: any) {
   const app = express();
   app.use(express.static(buildDir));
   const server = http.createServer(app as any);
-  if (args.db) {
+  if (args.db || process.env.VF_DB) {
     const options = {
-      db: args.db,
-      dbfolder: args.dbfolder,
-      password: args.password,
+      db: args.db || process.env.VF_DB,
+      dbfolder: args.dbfolder || process.env.VF_DB_FOLDER,
+      pgconn: args.pgconn || process.env.VF_PG_CONN,
+      password: args.password || process.env.VF_PASSWORD,
       path: '/socket',
     };
     makeSocketServer(server, options);

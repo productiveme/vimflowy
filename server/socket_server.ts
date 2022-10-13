@@ -5,16 +5,18 @@ import * as WebSocket from 'ws';
 import DataBackend, { InMemory } from '../src/shared/data_backend';
 import logger from '../src/shared/utils/logger';
 
-import { SQLiteBackend } from './data_backends';
+import { SQLiteBackend, PostgresBackend } from './data_backends';
 
 type SocketServerOptions = {
   db?: string,
   dbfolder?: string,
+  pgconn?: string,
   password?: string,
   path?: string,
 };
 
 export default function makeSocketServer(server: http.Server, options: SocketServerOptions) {
+
   const wss = new WebSocket.Server({ server, path: options.path });
 
   const dbs: {[docname: string]: DataBackend} = {};
@@ -37,6 +39,15 @@ export default function makeSocketServer(server: http.Server, options: SocketSer
       const sql_db = new SQLiteBackend();
       await sql_db.init(filename);
       db = sql_db;
+    } else if (options.db === 'postgres') {
+      let conn = "postgres://localhost:5432/vimflowy";
+      if (options.pgconn) {
+        conn = options.pgconn;
+        logger.info('Using postgres database');
+      }
+      const pg_db = new PostgresBackend(); 
+      await pg_db.init(conn);
+      db = pg_db;
     } else {
       logger.info('Using in-memory database');
       db = new InMemory();
