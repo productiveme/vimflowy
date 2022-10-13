@@ -12,10 +12,6 @@ export class SQLiteBackend extends DataBackend {
 
   private tableName: string = 'vimflowy';
 
-  constructor() {
-    super();
-  }
-
   public async init(filename: string): Promise<void> {
     this.db = new sqlite3(filename);
 
@@ -48,15 +44,12 @@ export class PostgresBackend extends DataBackend {
 
   private tableName: string = 'vimflowy';
 
-  constructor() {
-    super();
-  }
-
-  public async init(connectionString): Promise<void> {
+  public async init(connectionString: string): Promise<void> {
+    console.log({connectionString})
     this.db = new PGClient({ connectionString });
 
     await this.db.query(
-      `CREATE TABLE IF NOT EXISTS ${this.tableName} (id string PRIMARY KEY, value string)`
+      `CREATE TABLE IF NOT EXISTS ${this.tableName} (id text PRIMARY KEY, value text)`
     );
 
     this.getStatement = `SELECT value FROM ${this.tableName} WHERE id = ($1::text)`;

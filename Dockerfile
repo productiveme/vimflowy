@@ -23,12 +23,9 @@ COPY ./package-prod.json ./package.json
 COPY ./tsconfig.json ./
 RUN npm install --production
 VOLUME /app/db
-ENV PORT 3000
-ENV DBTYPE sqlite
+ENV VF_PORT 3000
+ENV VF_DB sqlite
+ENV VF_HOST 0.0.0.0
+ENV VF_BUILD_DIR /app/db
 EXPOSE $PORT
-ENTRYPOINT npm run startprod -- \
-    --host 0.0.0.0 \
-    --port ${PORT} \
-    --staticDir /app/build \
-    --db ${DBTYPE} \
-    --dbfolder /app/db
+ENTRYPOINT npm run startprod -- --staticDir /app/build
