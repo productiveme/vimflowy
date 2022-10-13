@@ -12,6 +12,7 @@
     "@types/lodash": "^4.14.186",
     "@types/minimist": "^1.2.2",
     "@types/node": "^12.19.11",
+    "@types/pg": "^8.6.5",
     "@types/ws": "0.0.41",
     "better-sqlite3": "^7.6.2",
     "express": "^4.16.4",
